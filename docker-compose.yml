@@ -1,0 +1,28 @@
+services:
+  apache-php-fpm:
+    build:
+      context: .
+      dockerfile: apache-php-fpm.dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src/conf/httpd-php-fpm.conf:/usr/local/apache2/conf/httpd.conf
+      - ./src/cgi-bin:/usr/local/apache2/cgi-bin
+      - ./src/user:/var/user
+      - ./src/www:/var/www
+      - ./src/static:/var/static
+      - ./src/.htpasswd:/usr/local/apache2/conf/.htpasswd
+      - ./src/conf/www.conf:/etc/php/8.2/fpm/pool.d/www.conf
+  apache-mod-php:
+    build:
+      context: .
+      dockerfile: apache-mod-php.dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./src/conf/httpd-mod-php.conf:/usr/local/apache2/conf/httpd.conf
+      - ./src/cgi-bin:/usr/local/apache2/cgi-bin
+      - ./src/user:/var/user
+      - ./src/www:/var/www
+      - ./src/static:/var/static
+      - ./src/.htpasswd:/usr/local/apache2/conf/.htpasswd
